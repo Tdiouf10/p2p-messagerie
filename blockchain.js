@@ -1,5 +1,14 @@
 const SHA256 = require('js-sha256');
 
+const message = {
+    sender: '',
+    senderAddress: '',
+    reciever: '',
+    recieverAddress: '',
+    content: '',
+}
+
+
 class Block{
     constructor(index, timestamp, data, previousHash = ''){
         this.index = index;
@@ -14,7 +23,7 @@ class Block{
         return SHA256(this.index + this.previousHash + this.timestamp +this.nonce+ JSON.stringify(this.data)).toString();
     }
 
-    mineBlockBlock(difficulty){
+    mineBlock(difficulty){
         while(this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")){
             this.nonce++;
             this.hash = this.calculateHash();
@@ -47,30 +56,83 @@ class Blockchain{
         this.chain.push(newBlock);
     }
 
-    isChainValid(){
+    getAllMessages(name){
+        let messages = [];
         for(let i = 1; i < this.chain.length; i++){
-            const currentBlock = this.chain[i];
-            const previousBlock = this.chain[i - 1];
-
-            if(currentBlock.hash !== currentBlock.calculateHash()){
-                return false;
-            }
-
-            if(currentBlock.previousHash !== previousBlock.hash){
-                return false;
+            if (this.chain[i].getDatas().sender == name){
+                messages.push(this.chain[i].getDatas());
             }
         }
+        return messages;
+    }
 
-        return true;
+    isValidChain(){
+        for (let i=1; i<this.chain.length;i++){
+            const curentBlock = this.chain[i];
+            const previousBlock = this.chain[i-1];
+
+            if ( (curentBlock.previousHash !== previousBlock.hash)) {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    replaceChain(newChain){
+        if (newChain.length <= this.chain.length){
+            console.log('Received chain is not longer than the current chain.');
+            return;
+        } else if (!this.isValidChain(newChain)){
+            console.log('The received chain is not valid.');
+            return;
+        }
+        console.log('Replacing blockchain with the new chain.');
+        this.chain = newChain;
     }
 }
 
 
 let test= new Blockchain();
 
+let message1 = {
+    sender: 'A',
+    senderAddress: 'A',
+    reciever: 'B',
+    recieverAddress: 'B',
+    content: 'Hello',
+}
 
-test.addBlock(new Block(1, "01/03/2023", {amount: 4}));
+test.addBlock(new Block(1, "01/02/2023", message1));
 
-test.addBlock(new Block(2, "01/03/2023", {amount: 10}));
+test.addBlock(new Block(2, "01/03/2023", message1));
 
 console.log(test);
+
+console.log(test.getAllMessages('A'));
+
+console.log(test.isValidChain());
+
+let test2= new Blockchain();
+
+test2.addBlock(new Block(1, "01/02/2023", message1));
+
+test2.addBlock(new Block(2, "01/03/2023", message1));
+
+test2.addBlock(new Block(3, "01/04/2023", message1));
+
+console.log('0');
+
+console.log(test);
+
+console.log('1');
+console.log(test2);
+
+
+
+console.log('2');
+console.log(test);
+
+console.log('3');
+console.log(test2)
+
+test.replaceChain(test2.chain);
