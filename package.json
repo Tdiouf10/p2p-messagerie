@@ -1,5 +1,19 @@
 {
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
-    "js-sha256": "^0.9.0"
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "js-sha256": "^0.9.0",
+    "peerjs": "^1.4.7",
+    "prompt-sync": "^4.2.0",
+    "socket.io": "^4.6.1",
+    "ws": "^8.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
   }
 }

@@ -1,4 +1,8 @@
+const { time } = require('console');
 const SHA256 = require('js-sha256');
+const ws = require('ws');
+//const Peer = require('peerjs');
+const prompt = require('prompt-sync')();
 
 const message = {
     sender: '',
@@ -31,7 +35,13 @@ class Block{
     }
 
     getDatas(){
-        return this.data;
+        return this.data.content;
+    }
+
+    addData(data){
+        let newdata = this.data;
+        newdata.push(data);
+        this.data = newdata;
     }
 
 }
@@ -39,11 +49,11 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 0;
+        this.difficulty = 0;    
     }
 
     createGenesisBlock(){
-        return new Block(0, "16/02/2023", "Genesis block", "0");
+        return new Block(0, Date(), "Genesis block", "0");
     }
 
     getLatestBlock(){
@@ -56,12 +66,10 @@ class Blockchain{
         this.chain.push(newBlock);
     }
 
-    getAllMessages(name){
+    getAllMessages(){
         let messages = [];
-        for(let i = 1; i < this.chain.length; i++){
-            if (this.chain[i].getDatas().sender == name){
-                messages.push(this.chain[i].getDatas());
-            }
+        for(let i = 1; i<this.chain.length; i++){
+            messages.push(this.chain[i].getDatas());
         }
         return messages;
     }
@@ -91,6 +99,35 @@ class Blockchain{
     }
 }
 
+// var connectPeers= (newpeers)=>{
+//     newpeers.forEach(peer => {
+//         var wsPeer = new ws(peer);
+//         wsPeer.on('open', ()=> initconnection(wsPeer));
+//         wsPeer.on('error', ()=> console.log('connection failed'));
+//     });
+// }
+
+// var initHttpServer = () => {
+//     var app= express();
+//     app.use(bodyParser.json());
+//     app.get('/blocks', (req, res) => res.send(JSON.stringify(blockchain)));
+//     app.post('/mineBlock', (req, res) => {
+//         var newBlock = generateNextBlock(req.body.data);
+//         addBlock(newBlock);
+//         broadcast(responseLatestMsg());
+//         console.log('block added: ' + JSON.stringify(newBlock));
+//         res.send();
+//     });
+//     app.get('/peers', (req, res) => {
+//         res.send(sockets.map(s => s._socket.remoteAddress + ':' + s._socket.remotePort));
+//     });
+//     app.post('/addPeer', (req, res) => {
+//         connectToPeers([req.body.peer]);
+//         res.send();
+//     });
+//     app.listen(http_port, () => console.log('Listening http on port: ' + http_port));
+// };
+
 
 let test= new Blockchain();
 
@@ -102,9 +139,23 @@ let message1 = {
     content: 'Hello',
 }
 
-test.addBlock(new Block(1, "01/02/2023", message1));
+let message2 = {
+    sender: 'A',
+    senderAddress: 'A',
+    reciever: 'B',
+    recieverAddress: 'B',
+    content: 'rrrrrrrrr',
+}
 
-test.addBlock(new Block(2, "01/03/2023", message1));
+
+
+test.addBlock(new Block(1, Date(), message2));
+
+test.addBlock(new Block(2, Date(), message1));
+
+b2 = new Block(3, Date(), message1);
+
+test.addBlock(b2);
 
 console.log(test);
 
@@ -114,11 +165,23 @@ console.log(test.isValidChain());
 
 let test2= new Blockchain();
 
-test2.addBlock(new Block(1, "01/02/2023", message1));
+test2.addBlock(new Block(1, Date(), message1));
 
-test2.addBlock(new Block(2, "01/03/2023", message1));
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 
-test2.addBlock(new Block(3, "01/04/2023", message1));
+sleep(2000);
+
+test2.addBlock(new Block(2, Date(), message1));
+
+sleep(2000);
+
+test2.addBlock(new Block(3, Date(), message1));
 
 console.log('0');
 
@@ -135,4 +198,70 @@ console.log(test);
 console.log('3');
 console.log(test2)
 
+
+console.log(test.getAllMessages());
+
+sleep(2000);
+
 test.replaceChain(test2.chain);
+
+
+var t = new Date();
+
+var t2=t.getDate()+"/"+t.getMonth()+"/"+t.getFullYear()+' '+ t.getHours()+':'+t.getMinutes()+':'+t.getSeconds();
+
+console.log(t2);
+           
+// // import readline module
+// const readline = require("readline");
+
+// // create interface for input and output
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// // create empty user input
+// var usname = [];
+// var psswd = [];
+
+// function Login(name,password){
+//         for (let i=0 ; i<usname.length ; i++){
+//             if (usname[i]==name && psswd[i]==password){
+//                 console.log("tu es bienvenue");
+//                 return 2;
+//             }else{
+//                 return(1);
+//             }
+//         }
+//     }
+
+
+// function Register(name,password){
+//     usname.push(name);
+//     psswd.push(password);
+// }
+// var a;
+// // question user to enter name
+// // while (a!=2) {
+//     const userInput = prompt("T'as un compte O/N ? ");
+//     if (userInput=="O" || userInput=="o"){
+//       const name = prompt('What is your name? ');
+//       const psw = prompt('What is your password? ');
+//       a = Login(name,psw)
+//     }else if (userInput=="N" || userInput=="n"){
+//       const nam = prompt('What is your name? ');
+//       const ps = prompt('What is your password? ');
+//       Register(nam,ps)
+//       console.log("tu es bienvenue");
+//       a = 2
+//     } else {
+//         console.log('Hein')
+//     }
+//     rl.close()
+// // }
+
+// // const name = prompt('What is your name? ');
+// // console.log(`Hi ${name}!`);
+
+
