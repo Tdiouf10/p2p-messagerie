@@ -7,4 +7,4 @@
 ## 15/03
 
 -Ajout du p2p 
--Cration d'une page basique pour les messages
+-Création d'une page basique pour les messages
