@@ -4,3 +4,7 @@
 -Récupération des messages ainsi que des receveurs et des envoyeurs
 -Trouver des pistes pour la mise en place du p2p
 
+## 15/03
+
+-Ajout du p2p 
+-Cration d'une page basique pour les messages
