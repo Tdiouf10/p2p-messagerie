@@ -99,20 +99,20 @@ class Blockchain{
     }
 }
 
-// var connectPeers= (newpeers)=>{
+// let connectPeers= (newpeers)=>{
 //     newpeers.forEach(peer => {
-//         var wsPeer = new ws(peer);
+//         let wsPeer = new ws(peer);
 //         wsPeer.on('open', ()=> initconnection(wsPeer));
 //         wsPeer.on('error', ()=> console.log('connection failed'));
 //     });
 // }
 
-// var initHttpServer = () => {
-//     var app= express();
+// let initHttpServer = () => {
+//     let app= express();
 //     app.use(bodyParser.json());
 //     app.get('/blocks', (req, res) => res.send(JSON.stringify(blockchain)));
 //     app.post('/mineBlock', (req, res) => {
-//         var newBlock = generateNextBlock(req.body.data);
+//         let newBlock = generateNextBlock(req.body.data);
 //         addBlock(newBlock);
 //         broadcast(responseLatestMsg());
 //         console.log('block added: ' + JSON.stringify(newBlock));
@@ -206,9 +206,9 @@ sleep(2000);
 test.replaceChain(test2.chain);
 
 
-var t = new Date();
+let t = new Date();
 
-var t2=t.getDate()+"/"+t.getMonth()+"/"+t.getFullYear()+' '+ t.getHours()+':'+t.getMinutes()+':'+t.getSeconds();
+let t2=t.getDate()+"/"+t.getMonth()+"/"+t.getFullYear()+' '+ t.getHours()+':'+t.getMinutes()+':'+t.getSeconds();
 
 console.log(t2);
            
@@ -222,8 +222,8 @@ console.log(t2);
 // });
 
 // // create empty user input
-// var usname = [];
-// var psswd = [];
+// let usname = [];
+// let psswd = [];
 
 // function Login(name,password){
 //         for (let i=0 ; i<usname.length ; i++){
@@ -241,7 +241,7 @@ console.log(t2);
 //     usname.push(name);
 //     psswd.push(password);
 // }
-// var a;
+// let a;
 // // question user to enter name
 // // while (a!=2) {
 //     const userInput = prompt("T'as un compte O/N ? ");
