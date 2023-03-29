@@ -1,26 +1,26 @@
-//Defining some global utility variables
-var isChannelReady = false;
-var isInitiator = false;
-var isStarted = false;
-var pc;
-var turnReady;
+//Defining some global utility letiables
+let isChannelReady = false;
+let isInitiator = false;
+let isStarted = false;
+let pc;
+let turnReady;
 var datachannel;
-var clientName = "user" + Math.floor(Math.random() * 1000 + 1);
-var remoteclient;
+let clientName = prompt("nom stp bg")
+let remoteclient;
 
 document.getElementById("yourname").innerHTML="Connecté en tant que "+clientName
 
 //Initialize turn/stun server here
 //turnconfig will be defined in public/js/config.js
-var pcConfig = turnConfig;
+let pcConfig = turnConfig;
 
 // Prompting for room name:
-// var room = prompt('Enter room name:');
+// let room = prompt('Enter room name:');
 //setting test room
-var room = "test";
+let room = "test";
 
 //Initializing socket.io
-var socket = io.connect();
+let socket = io.connect();
 
 //Ask server to add in the room if room name is provided by the user
 if (room !== "") {
@@ -93,7 +93,7 @@ socket.on("message", function (message, room) {
   } else if (message.type === "answer" && isStarted) {
     pc.setRemoteDescription(new RTCSessionDescription(message));
   } else if (message.type === "candidate" && isStarted) {
-    var candidate = new RTCIceCandidate({
+    let candidate = new RTCIceCandidate({
       sdpMLineIndex: message.label,
       candidate: message.candidate,
     });
@@ -127,7 +127,7 @@ function maybeStart() {
 window.onbeforeunload = function () {
   sendMessage("bye", room);
 };
-var datachannel;
+let datachannel;
 //Creating peer connection
 function createPeerConnection() {
   try {
@@ -154,13 +154,13 @@ function createPeerConnection() {
 
     // Answerer side
     pc.ondatachannel = function (event) {
-      var channel = event.channel;
+      let channel = event.channel;
       channel.onopen = function (event) {
         channel.send("ANSWEREROPEN");
       };
       channel.onmessage = async (event) => {
         try {
-          var themessage = event.data;
+          let themessage = event.data;
           console.log(themessage, event);
           viewmsgtoelement(document.getElementById("messagesent"), themessage);
         } catch (err) {
@@ -241,7 +241,7 @@ function stop() {
   pc = null;
 }
 
-var connectbutton = document.getElementById("connectbutton");
+let connectbutton = document.getElementById("connectbutton");
 if (connectbutton) {
   connectbutton.addEventListener("click", () => {
     if (connectbutton.innerHTML !== "Connected") {
@@ -261,7 +261,7 @@ if (connectbutton) {
 let messagetexted = "";
 //DOM elements
 
-var messageinput = document.getElementById("messagearea");
+let messageinput = document.getElementById("messagearea");
 if (messageinput) {
   //Tip: This event is similar to the onchange event.
   //The difference is that the oninput event occurs immediately
@@ -274,11 +274,11 @@ if (messageinput) {
   });
 }
 
-var sendmessagebutton = document.getElementById("sendmessage");
+let sendmessagebutton = document.getElementById("sendmessage");
 if (sendmessagebutton) {
   sendmessagebutton.disabled = true;
   sendmessagebutton.addEventListener("click", () => {
-    var themessage = "<p>" + clientName + ":" + messagetexted + "</p>";
+    let themessage = "<p>" + clientName + ":" + messagetexted + "</p>";
     viewmsgtoelement(document.getElementById("messagesent"), themessage);
     datachannel.send(themessage);
     messageinput.value = "";
