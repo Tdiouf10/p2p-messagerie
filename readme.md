@@ -14,6 +14,7 @@
 -Début de l'assemblage du chat et de la blockchain
 
 
+## Pour le 26/04 clear le code essayer ou de chiffrer les msg ou alors interface web
 
 ## Commment lancer le chat 
 
