@@ -18,12 +18,22 @@
 
 ## Commment lancer le chat 
 
+-Dl le code
+
+-Ouvrir VSC:
+
+```bash
+npm install
+```
+
+-Ouvrir un terminal host:
 -Si on est l'host
 
 ```bash
 npm run test
 ```
 
+-Ourvrir un autre terminal:
 -Pour se connecter à qqn 
 
 ```bash
