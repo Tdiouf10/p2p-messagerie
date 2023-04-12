@@ -12,3 +12,19 @@
 ## 12/04
 
 -Début de l'assemblage du chat et de la blockchain
+
+
+
+## Commment lancer le chat 
+
+-Si on est l'host
+
+```
+npm run test
+```
+
+-Pour se connecter à qqn 
+
+```
+npn run test localhost:client
+```
