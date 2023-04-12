@@ -7,4 +7,8 @@
 ## 15/03
 
 -Ajout du p2p 
--Création d'une page basique pour les messages
+
+
+## 12/04
+
+-Début de l'assemblage du chat et de la blockchain
