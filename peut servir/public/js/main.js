@@ -4,9 +4,22 @@ let isInitiator = false;
 let isStarted = false;
 let pc;
 let turnReady;
-var datachannel;
+// var datachannel;
 let clientName = prompt("nom stp bg")
 let remoteclient;
+
+// import { Block } from "./modules/blockchain.js";
+
+
+// let blockchain = new Block();
+
+// console.log(blockchain);
+
+// let mesage= "cc"
+
+// let hash = sha256(mesage).toString();
+
+// console.log(hash);
 
 document.getElementById("yourname").innerHTML="Connecté en tant que "+clientName
 
@@ -279,6 +292,8 @@ if (sendmessagebutton) {
   sendmessagebutton.disabled = true;
   sendmessagebutton.addEventListener("click", () => {
     let themessage = "<p>" + clientName + ":" + messagetexted + "</p>";
+    //here create block message is sent
+    // Blockchain.addBlock(new Block(id, Date(), hashier(messagetexted)));
     viewmsgtoelement(document.getElementById("messagesent"), themessage);
     datachannel.send(themessage);
     messageinput.value = "";

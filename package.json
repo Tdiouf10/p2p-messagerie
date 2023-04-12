@@ -1,19 +1,22 @@
 {
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
+  "name": "node-p2p-chat",
+  "version": "1.0.0",
+  "description": "## Execution",
+  "main": "index.js",
   "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
+    "is-port-reachable": "^4.0.0",
+    "is-reachable": "^5.2.1",
     "js-sha256": "^0.9.0",
-    "peerjs": "^1.4.7",
-    "prompt-sync": "^4.2.0",
-    "socket.io": "^4.6.1",
-    "ws": "^8.12.1"
+    "ws": "^8.13.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
-  }
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "start:watch": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

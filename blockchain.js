@@ -1,17 +1,6 @@
 const { time } = require('console');
 const SHA256 = require('js-sha256');
 const ws = require('ws');
-//const Peer = require('peerjs');
-
-const message = {
-    sender: '',
-    senderAddress: '',
-    reciever: '',
-    recieverAddress: '',
-    content: '',
-}
-
-
 class Block{
     constructor(index, timestamp, data, previousHash = ''){
         this.index = index;
@@ -34,7 +23,7 @@ class Block{
     }
 
     getDatas(){
-        return this.data.content;
+        return this.data;
     }
 
     addData(data){
@@ -49,6 +38,10 @@ class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
         this.difficulty = 0;    
+    }
+
+    getChain(){
+        return this.chain;
     }
 
     createGenesisBlock(){
@@ -73,6 +66,10 @@ class Blockchain{
         return messages;
     }
 
+    getLastMessage(){
+        return this.chain[this.chain.length-1].data;
+    }
+
     isValidChain(){
         for (let i=1; i<this.chain.length;i++){
             const curentBlock = this.chain[i];
@@ -89,45 +86,19 @@ class Blockchain{
         if (newChain.length <= this.chain.length){
             console.log('Received chain is not longer than the current chain.');
             return;
-        } else if (!this.isValidChain(newChain)){
-            console.log('The received chain is not valid.');
-            return;
         }
+        // } else if (!this.isValidChain(newChain)){
+        //     console.log('The received chain is not valid.');
+        //     return;
+        // }
         console.log('Replacing blockchain with the new chain.');
         this.chain = newChain;
     }
+
+    getpreviousID(){
+        return this.chain[this.chain.length-1].index;
+    }
 }
-
-
-
-
-// let message1 = {
-//     sender: 'A',
-//     senderAddress: 'A',
-//     reciever: 'B',
-//     recieverAddress: 'B',
-//     content: 'Hello',
-// }
-
-// let message2 = {
-//     sender: 'A',
-//     senderAddress: 'A',
-//     reciever: 'B',
-//     recieverAddress: 'B',
-//     content: 'rrrrrrrrr',
-// }
-
-
-
-// test.addBlock(new Block(1, Date(), message2));
-
-// test.addBlock(new Block(2, Date(), message1));
-
-// b2 = new Block(3, Date(), message1);
-
-// test.addBlock(b2);
-
-
 
 module.exports = {
     Block,
