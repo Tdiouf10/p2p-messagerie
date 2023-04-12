@@ -19,12 +19,12 @@
 
 -Si on est l'host
 
-```
+```bash
 npm run test
 ```
 
 -Pour se connecter à qqn 
 
-```
-npn run test localhost:client
+```bash
+npn run test localhost:portclientàjoindre
 ```
