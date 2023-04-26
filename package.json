@@ -4,6 +4,7 @@
   "description": "## Execution",
   "main": "index.js",
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "is-port-reachable": "^4.0.0",
     "is-reachable": "^5.2.1",
     "js-sha256": "^0.9.0",

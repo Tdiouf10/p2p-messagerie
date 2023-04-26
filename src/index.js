@@ -1,5 +1,7 @@
 const Peer = require("./Peer");
 const Blockchain = require('../blockchain')
+const SHA256 = require('js-sha256');
+const CryptoJS = require('crypto-js');
 
 // if (blockchain === undefined) blockchain = new Blockchain.Blockchain()
 
@@ -65,7 +67,17 @@ function onNewInputMessage(data) {
     return;
   }
   console.log(data.chain)
-  blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),data.split("\r")[0]));
+  // const messageHash = blockchain.getLastMessage();
+  const secret= blockchain.getLatestBlock().hash;
+
+  const t = CryptoJS.AES.encrypt(data.split("\r")[0], secret).toString();
+  console.log(t)
+
+  const bytes = CryptoJS.AES.decrypt(t, secret);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  console.log(originalText)
+  // blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),data.split("\r")[0]));
+  blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),t));
   console.log(blockchain);
   console.log(blockchain.getAllMessages());
   console.log(data.split("\r")[0]);
@@ -104,13 +116,24 @@ function onData(socket, data) {
       // // console.log(a)
       // console.log(JSON.parse(data.chain))
       blockchain.replaceChainWithNewChain((b.Blockchain));
-      console.log(blockchain.chain)
+      console.log(SHA256(blockchain.getLastMessage()))
+      // console.log(SHA256())
+      // console
       console.log("drtfgfybjnk")
       // console.log(blockchain.getLastMessage())
     }
     // blockchain.replaceChainWithNewChain(data.chain)
-    console.log(blockchain.getLastMessage().data)
-    console.log(`\n[Message from ${remoteAddress}:${myPort}]: ${blockchain.getLastMessage()}`);
+    // console.log(blockchain.getLastMessage().data)
+    
+
+    // console.log(blockchain.getLastMessage())
+    const secret= blockchain.chain[blockchain.chain.length-2].hash;
+    console.log(blockchain.getLastMessage())
+    const bytes = CryptoJS.AES.decrypt(blockchain.getLastMessage(), secret);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(originalText)
+    // console.log(`\n[Message from ${remoteAddress}:${myPort}]: ${blockchain.getLastMessage()}`);
+    console.log(`\n[Message from ${remoteAddress}:${myPort}]: ${bytes.toString(CryptoJS.enc.Utf8)}`);
     // let a = JSON.parse(data.chain);
     // console.log(a)
     console.log(blockchain)
