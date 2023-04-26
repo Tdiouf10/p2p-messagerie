@@ -15,7 +15,7 @@ username = Math.floor(Math.random() * 10001) + 1;
 
   process.stdin.on("data", (bufferData) => {
     const data = bufferData.toString();
-    console.log("Message send to "+ hosts);
+    console.log("Message send to all peers: ");
     onNewInputMessage(data);
   });
 })();
@@ -24,6 +24,7 @@ function main() {
   
   hosts = getHosts();
   port = getPort();
+
   
   peer = new Peer(port);
 
@@ -36,14 +37,11 @@ function main() {
 function getPort() {
   let port = 21562;
   for (let host of hosts){
-    // console.log(host) 
     host=host.split(":");
     if (host[1] == String(port)){
       port = port + Date.now() % 10000;
     }
   }
-
-  //si on enelève la boucle cpappt
   if (!port) throw Error("PORT not found");
 
   return port;

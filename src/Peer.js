@@ -127,7 +127,6 @@ module.exports = class Peer {
     throw Error("onConnection handler not implemented");
   }
 
-  // jsonData= blockchain
   broadcastMessage(jsonData) {
     this.connections.forEach((socket) => this.sendMessage(socket, jsonData));
   }
