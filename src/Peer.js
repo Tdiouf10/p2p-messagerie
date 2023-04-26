@@ -131,6 +131,8 @@ module.exports = class Peer {
     this.connections.forEach((socket) => this.sendMessage(socket, jsonData));
   }
 
+
+
   sendMessage(socket, jsonData) {
     const data = JSON.stringify(jsonData);
 

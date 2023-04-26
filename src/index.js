@@ -15,8 +15,13 @@ username = Math.floor(Math.random() * 10001) + 1;
 
   process.stdin.on("data", (bufferData) => {
     const data = bufferData.toString();
-    console.log("Message send to all peers: ");
-    onNewInputMessage(data);
+    console.log(JSON.stringify(data));
+    if (data === "exit\r\n" || data === "quit\r\n") {
+      process.exit();
+    }else{
+      console.log("Message send to all peers: ");
+      onNewInputMessage(data);
+    }
   });
 })();
 
