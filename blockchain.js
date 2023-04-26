@@ -61,7 +61,7 @@ class Blockchain{
     getAllMessages(){
         let messages = [];
         for(let i = 1; i<this.chain.length; i++){
-            messages.push(this.chain[i].getDatas());
+            messages.push(this.chain[i].data);
         }
         return messages;
     }
