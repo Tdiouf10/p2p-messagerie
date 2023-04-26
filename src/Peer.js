@@ -29,9 +29,6 @@ module.exports = class Peer {
       this.listenClientData(socket);
 
       this.sendWelcomeMessage(socket, this.port, loopback, sendKnownHosts);
-
-      console.log("Connected to", address);
-      console.log("\n\n");
     });
   }
 
@@ -132,23 +129,15 @@ module.exports = class Peer {
 
   // jsonData= blockchain
   broadcastMessage(jsonData) {
-    console.log("broadcastMessage", jsonData.chain);
-    // for(const block of jsonData.chain.chain){
-    //   console.log(block);
-    // }
     this.connections.forEach((socket) => this.sendMessage(socket, jsonData));
   }
 
   sendMessage(socket, jsonData) {
     const data = JSON.stringify(jsonData);
-    console.log("sendMessage", jsonData.chain);
 
     try {
       if (!socket._writableState.ended) {
         socket.write(data);
-        console.log("aaaaaaaaaa",data)
-        let datas = JSON.parse(data);
-        console.log("bbbbbbbbbb",datas)
       }
     } catch (e) {}
   }
