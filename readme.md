@@ -16,6 +16,12 @@
 
 ## Pour le 26/04 clear le code essayer ou de chiffrer les msg ou alors interface web
 
+## 26/04 
+
+-Code clear
+
+-Messages chiffrés dans la blockchain
+
 ## Commment lancer le chat 
 
 -Dl le code
