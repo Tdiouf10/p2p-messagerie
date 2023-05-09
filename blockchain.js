@@ -1,5 +1,6 @@
 const { time } = require('console');
 const SHA256 = require('js-sha256');
+const { threadId } = require('worker_threads');
 const ws = require('ws');
 class Block{
     constructor(index, timestamp, data, previousHash = ''){
@@ -8,18 +9,14 @@ class Block{
         this.data = data;
         this.previousHash = previousHash;
         this.hash = this.calculateHash();
-        this.nonce = 0;
     }
 
     calculateHash(){
         return SHA256(this.index + this.previousHash + this.timestamp +this.nonce+ JSON.stringify(this.data)).toString();
     }
 
-    mineBlock(difficulty){
-        while(this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")){
-            this.nonce++;
-            this.hash = this.calculateHash();
-        }
+    mineBlock(){
+        this.hash = this.calculateHash();
     }
 
     getDatas(){
@@ -37,7 +34,6 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 0;    
     }
 
     getChain(){
@@ -54,7 +50,7 @@ class Blockchain{
 
     addBlock(newBlock){
         newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.mineBlock(this.difficulty);
+        newBlock.mineBlock();
         this.chain.push(newBlock);
     }
 
@@ -84,14 +80,8 @@ class Blockchain{
 
     replaceChainWithNewChain(newChain){
         if (newChain.length <= this.chain.length){
-            // console.log('Received chain is not longer than the current chain.');
             return;
         }
-        // } else if (!this.isValidChain(newChain)){
-        //     console.log('The received chain is not valid.');
-        //     return;
-        // }
-        // console.log('Replacing blockchain with the new chain.');
         this.chain = newChain;
     }
 
