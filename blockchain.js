@@ -12,10 +12,6 @@ class Block{
         return SHA256(this.index + this.previousHash + this.timestamp +this.nonce+ JSON.stringify(this.data)).toString();
     }
 
-    mineBlock(){
-        this.hash = this.calculateHash();
-    }
-
     getDatas(){
         return this.data;
     }
@@ -47,7 +43,7 @@ class Blockchain{
 
     addBlock(newBlock){
         newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.mineBlock();
+        newBlock.calculateHash();
         this.chain.push(newBlock);
     }
 

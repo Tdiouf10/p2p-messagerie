@@ -67,7 +67,6 @@ function onNewInputMessage(data) {
   const secret= blockchain.getLatestBlock().hash;
 
   const dataSecret = CryptoJS.AES.encrypt(data.split("\r")[0], secret).toString();
-  // blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),data.split("\r")[0]));
   blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),dataSecret));
   peer.broadcastMessage({ type: "message",  myPort: port, chain: JSON.stringify(blockchain) });
   
@@ -89,7 +88,6 @@ function onData(socket, data) {
     
     const secret= blockchain.chain[blockchain.chain.length-2].hash;
     const bytes = CryptoJS.AES.decrypt(blockchain.getLastMessage(), secret);
-    // console.log(`\n[Message from ${remoteAddress}:${myPort}]: ${blockchain.getLastMessage()}`);
     console.log(`\n[Message from ${remoteAddress}:${myPort}]: ${bytes.toString(CryptoJS.enc.Utf8)}`);
   }
 }
