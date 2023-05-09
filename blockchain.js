@@ -1,7 +1,4 @@
-const { time } = require('console');
 const SHA256 = require('js-sha256');
-const { threadId } = require('worker_threads');
-const ws = require('ws');
 class Block{
     constructor(index, timestamp, data, previousHash = ''){
         this.index = index;

@@ -18,7 +18,7 @@ username = Math.floor(Math.random() * 10001) + 1;
     if (data === "exit\r\n" || data === "quit\r\n") {
       process.exit();
     }else{
-      console.log("Message send to all peers: ");
+      console.log("Message send to all peers");
       onNewInputMessage(data);
     }
   });
@@ -66,10 +66,10 @@ function onNewInputMessage(data) {
   }
   const secret= blockchain.getLatestBlock().hash;
 
-  const t = CryptoJS.AES.encrypt(data.split("\r")[0], secret).toString();
+  const dataSecret = CryptoJS.AES.encrypt(data.split("\r")[0], secret).toString();
   // blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),data.split("\r")[0]));
-  blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),t));
-  peer.broadcastMessage({ type: "message", message: data, myPort: port, chain: JSON.stringify(blockchain) });
+  blockchain.addBlock(new Blockchain.Block(blockchain.getpreviousID()+1, Date(),dataSecret));
+  peer.broadcastMessage({ type: "message",  myPort: port, chain: JSON.stringify(blockchain) });
   
 }
 

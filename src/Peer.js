@@ -15,8 +15,9 @@ module.exports = class Peer {
   }
 
   connectTo(address, sendKnownHosts = true, loopback = false) {
-    const splittedAddress = address.split(":");
+    let splittedAddress = address.split(":");
 
+    
     if (splittedAddress.length < 2) {
       throw Error("Invalid host address. Expected host:port ");
     }
@@ -119,19 +120,9 @@ module.exports = class Peer {
     });
   }
 
-  onData(socket, data) {
-    throw Error("onData handler not implemented");
-  }
-
-  onConnection(socket) {
-    throw Error("onConnection handler not implemented");
-  }
-
   broadcastMessage(jsonData) {
     this.connections.forEach((socket) => this.sendMessage(socket, jsonData));
   }
-
-
 
   sendMessage(socket, jsonData) {
     const data = JSON.stringify(jsonData);
